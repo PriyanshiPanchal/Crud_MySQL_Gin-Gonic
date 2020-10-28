@@ -6,7 +6,6 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -85,14 +84,14 @@ func main() {
 	// POST new person details
 	router.POST("/person", func(c *gin.Context) {
 		var buffer bytes.Buffer
-		id:= c.Query("id")
+		// id:= c.Query("id")
 		first_name := c.Query("first_name")
 		last_name := c.Query("last_name")
-		stmt, err := db.Prepare("insert into person (id, first_name, last_name) values(?,?,?);")
+		stmt, err := db.Prepare("insert into person (first_name, last_name) values(?,?);")
 		if err != nil {
 			fmt.Print(err.Error())
 		}
-		_, err = stmt.Exec(id, first_name, last_name)
+		_, err = stmt.Exec(first_name, last_name)
 
 		if err != nil {
 			fmt.Print(err.Error())
